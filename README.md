@@ -33,11 +33,11 @@ This is a fully responsive, dynamic portfolio website that presents professional
 
 ## 🛠 Tech Stack
 
-| Technology | Usage | Percentage |
-|-----------|-------|-----------|
-| **CSS** | Styling & Animations | 46.5% |
-| **HTML** | Markup & Structure | 32.5% |
-| **JavaScript** | Vue 3 & Interactivity | 21% |
+| Technology | Usage 
+|-----------|-------|
+| **CSS** | Styling & Animations |
+| **HTML** | Markup & Structure | 
+| **JavaScript** | Vue 3 & Interactivity |
 
 ### Dependencies
 
