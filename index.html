@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- =======================================================================
+       01. MAIN CONTENT AREA
+       ======================================================================= -->
+  <main>
+
+    <!-- =============================================================
+         SECTION: HERO
+         ============================================================= -->
+    <section class="hero-section" id="hero">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <div class="hero-greeting reveal">Hello, I'm</div>
+          <h1 class="hero-name reveal reveal-delay-1">
+            {{ firstName }}<br><strong>{{ lastName }}</strong>
+          </h1>
+          <p class="hero-title reveal reveal-delay-2">{{ data.hero.title }}</p>
+          <p class="hero-tagline reveal reveal-delay-3">{{ data.hero.tagline }}</p>
+
+          <div class="hero-links reveal reveal-delay-4">
+            <a :href="'mailto:' + data.hero.email + '?subject=Sharing Connection Request & Interested Opportunity Via Portfolio'" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              Mail
+            </a>
+            <a :href="data.hero.linkedin" target="_blank" class="btn btn-outline">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+
+          <div class="hero-meta reveal reveal-delay-5">
+            <div class="hero-meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              {{ data.hero.location }}
+            </div>
+            <div class="hero-meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              {{ data.hero.email }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Photo Frame -->
+        <div class="hero-photo-wrap reveal reveal-delay-2">
+          <div class="hero-photo-frame">
+            <img :src="data.hero.photo" :alt="data.hero.name" />
+          </div>
+          <div class="photo-accent"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================================
+         DYNAMIC SECTIONS (VUE TEMPLATE)
+         ============================================================= -->
+    <template v-for="(section, index) in data.sections" :key="section.type">
+
+      <!-- Section Divider -->
+      <div class="section-divider"></div>
+
+      <!-- ==========================================
+           SECTION: EDUCATION
+           ========================================== -->
+      <section
+        v-if="section.type === 'education'"
+        :id="section.type"
+        class="section"
+        :class="{ 'section-bg-alt': index % 2 !== 0 }"
+      >
+        <section-header :section="section"></section-header>
+        <div class="education-grid">
+          <div
+            v-for="(edu, i) in section.items"
+            :key="i"
+            class="edu-card reveal"
+            :class="'reveal-delay-' + Math.min(i+1,5)"
+          >
+            <div>
+              <h3 class="edu-degree">{{ edu.degree }}</h3>
+              <div class="edu-institution">{{ edu.institution }}</div>
+              <p class="edu-details">{{ edu.details }}</p>
+            </div>
+            <div class="edu-meta">
+              <div class="edu-period">{{ edu.period }}</div>
+              <div class="edu-gpa">Grade: {{ edu.gpa }}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: SKILLS
+           ========================================== -->
+      <section
+        v-else-if="section.type === 'skills'"
+        :id="section.type"
+        class="section"
+        :class="{ 'section-bg-alt': index % 2 !== 0 }"
+      >
+        <section-header :section="section"></section-header>
+        <div class="skills-grid">
+          <div
+            v-for="(sub, i) in section.subsections"
+            :key="i"
+            class="skill-group reveal"
+            :class="'reveal-delay-' + Math.min(i+1,5)"
+          >
+            <div class="skill-group-label">{{ sub.label }}</div>
+            <div class="skill-tags">
+              <span v-for="skill in sub.items" :key="skill" class="skill-tag">{{ skill }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: EXPERIENCE
+           ========================================== -->
+      <section
+        v-else-if="section.type === 'experience'"
+        :id="section.type"
+        class="section"
+        :class="{ 'section-bg-alt': index % 2 !== 0 }"
+      >
+        <section-header :section="section"></section-header>
+        <div class="timeline">
+          <div
+            v-for="(exp, i) in section.items"
+            :key="i"
+            class="timeline-item reveal"
+            :class="'reveal-delay-' + Math.min(i+1,5)"
+          >
+            <div class="exp-card">
+              <div class="exp-header">
+                <div>
+                  <h3 class="exp-role">{{ exp.role }}</h3>
+                  <div class="exp-company">{{ exp.company }}</div>
+                </div>
+                <div class="exp-meta-right">
+                  <div class="exp-period">{{ exp.period }}</div>
+                  <div class="exp-location">{{ exp.location }}</div>
+                </div>
+              </div>
+              <ul class="exp-highlights">
+                <li v-for="(h, j) in exp.highlights" :key="j">{{ h }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: PROJECTS
+           ========================================== -->
+      <section
+        v-else-if="section.type === 'projects'"
+        :id="section.type"
+        class="section"
+        :class="{ 'section-bg-alt': index % 2 !== 0 }"
+      >
+        <section-header :section="section"></section-header>
+        <div class="projects-grid">
+          <div
+            v-for="(proj, i) in section.items"
+            :key="i"
+            class="project-card reveal"
+            :class="'reveal-delay-' + Math.min(i+1,5)"
+          >
+            <div class="project-header">
+              <h3 class="project-name">{{ proj.name }}</h3>
+            </div>
+            <ul class="project-desc">
+            <li v-for="(h, j) in proj.description" :key="j">{{ h }}</li>
+            </ul>
+
+
+            <div class="project-tech">
+              <span v-for="t in proj.tech" :key="t">{{ t }}</span>
+            </div>
+            <a :href="proj.link" target="_blank" class="project-link">
+              View Project
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: CERTIFICATIONS
+           ========================================== -->
+      <section
+        v-else-if="section.type === 'certifications'"
+        :id="section.type"
+        class="section"
+        :class="{ 'section-bg-alt': index % 2 !== 0 }"
+      >
+        <section-header :section="section"></section-header>
+        <div class="certs-grid">
+          <div
+            v-for="(cert, i) in section.items"
+            :key="i"
+            class="cert-card reveal"
+            :class="'reveal-delay-' + Math.min(i+1,5)"
+          >
+            <div>
+              <h4 class="cert-name">{{ cert.name }}</h4>
+              <div class="cert-issuer">{{ cert.issuer }}</div>
+              <div class="cert-meta">Issued: {{ cert.date }}</div>
+              <div class="cert-id">ID: {{ cert.credentialId }}</div>
+              <a :href="cert.link" target="_blank" class="project-link">
+                View Certificate
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M7 17L17 7M7 7h10v10" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: ACHIEVEMENTS
+           ========================================== -->
+      <section
+        v-else-if="section.type === 'achievements'"
+        :id="section.type"
+        class="section"
+        :class="{ 'section-bg-alt': index % 2 !== 0 }"
+      >
+        <section-header :section="section"></section-header>
+        <div class="achievements-list">
+          <div
+            v-for="(ach, i) in section.items"
+            :key="i"
+            class="achievement-card reveal"
+            :class="'reveal-delay-' + Math.min(i+1,5)"
+          >
+            <div class="achievement-year">{{ ach.year }}</div>
+            <div>
+              <h4 class="achievement-title">{{ ach.title }}</h4>
+              <p class="achievement-desc">{{ ach.description }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION: CONTACT (GET IN TOUCH)
+           ========================================== -->
+      <section
+        v-else-if="section.type === 'contact'"
+        :id="section.type"
+        class="section"
+        :class="{ 'section-bg-alt': index % 2 !== 0 }"
+      >
+        <section-header :section="section"></section-header>
+        <div class="contact-cta reveal">
+          <p class="contact-cta-text">
+            I'm always open to new opportunities and collaborations. Feel free to reach out via email, connect on LinkedIn, or
+            explore my projects on GitHub.
+          </p>
+          <div class="contact-cta-btns">
+            <!-- Mail Button -->
+            <a :href="'mailto:' + data.hero.email + '?subject=Sharing Connection Request & Interested Opportunity Via Portfolio'" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              Mail
+            </a>
+            <!-- LinkedIn Button -->
+            <a :href="data.hero.linkedin" target="_blank" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+            <!-- GitHub Button -->
+            <a :href="data.hero.github" target="_blank" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </template>
+
+  </main>
+
+  <!-- =======================================================================
+       02. FOOTER
+       ======================================================================= -->
+  <footer class="footer">
+    <p class="footer-text">
+
+      Built with ❤️ by {{ data.hero.name }}</a>
+    </p>
+  </footer>
+
+</div>
+
+<!-- =======================================================================
+     03. SCRIPTS & VUE.JS APPLICATION LOGIC
+     ======================================================================= -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="portfolio.js"></script>
+
+<script>
+const { createApp, ref, computed, onMounted, onUnmounted } = Vue;
+
+// ── SHARED SECTION HEADER COMPONENT ────────────────────────────
+const SectionHeader = {
+  name: 'SectionHeader',
+  props: ['section'],
+  template: `
+    <div class="section-header reveal">
+      <div class="section-icon">{{ section.icon }}</div>
+      <div class="section-title-wrap">
+        <span class="section-label">Portfolio</span>
+        <h2 class="section-title">{{ section.title }}</h2>
+      </div>
+      <div class="section-rule"></div>
+    </div>
+  `
+};
+
+// ── MAIN APP ────────────────────────────────────────────────────
+createApp({
+  components: { SectionHeader },
+
+  setup() {
+    const data = ref(portfolioData);
+    const activeSection = ref('hero');
+    const currentYear = new Date().getFullYear();
+
+    // Hero name split
+    const nameParts = computed(() => {
+      const parts = data.value.hero.name.trim().split(' ');
+      return { first: parts.slice(0, -1).join(' '), last: parts[parts.length - 1] };
+    });
+    const firstName  = computed(() => nameParts.value.first);
+    const lastName   = computed(() => nameParts.value.last);
+    const initials   = computed(() => nameParts.value.first[0] ?? '');
+    const surname    = computed(() => nameParts.value.last);
+
+    // Set page title
+    document.getElementById('page-title').textContent = data.value.hero.name + ' Portfolio';
+
+    // ── SCROLL REVEAL ─────────────────────────────────────────────
+    let revealObserver;
+    function initReveal() {
+      revealObserver = new IntersectionObserver(
+        entries => entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            revealObserver.unobserve(e.target);
+          }
+        }),
+        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    }
+
+    // ── ACTIVE SECTION TRACKER ────────────────────────────────────
+    let sectionObserver;
+    function initSectionTracker() {
+      sectionObserver = new IntersectionObserver(
+        entries => entries.forEach(e => {
+          if (e.isIntersecting) activeSection.value = e.target.id;
+        }),
+        { threshold: 0.35 }
+      );
+      document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+    }
+
+    onMounted(() => {
+      setTimeout(initReveal, 100);
+      initSectionTracker();
+    });
+
+    onUnmounted(() => {
+      revealObserver?.disconnect();
+      sectionObserver?.disconnect();
+    });
+
+    return {
+      data,
+      activeSection,
+      firstName,
+      lastName,
+      initials,
+      surname,
+      currentYear,
+    };
+  }
+}).mount('#app');
+</script>
+
+</body>
+</html>
