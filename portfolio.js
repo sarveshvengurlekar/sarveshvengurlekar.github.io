@@ -11,7 +11,7 @@ const portfolioData = {
     name: "Sarvesh Vengurlekar",
     title: "Aspiring Software Engineer",
     tagline: "Aspiring Software Engineer expertise's in Web Development, Data Science and Artificial Intelligence and Machine Learning.",
-    photo: "Self_Photo (1).jpg",   // Replace with your own image path
+    photo: "assets/Self_Photo.jpg",   // Replace with your own image path
     email: "sarveshvengurlekarwork@gmail.com",
     // phone: "+1 (415) 000-0000",
     location: "Mumbai, Maharashtra, India",
